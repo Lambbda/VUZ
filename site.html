@@ -1,0 +1,295 @@
+﻿<html>
+
+<head>
+<meta charset="UTF-8">
+<title> Выбор ВУЗа Онлайн </title>
+<link rel="shortcut icon" href="favicon.png" />
+
+<script type="text/javascript">
+
+function plus_score(){				/*Дублирует форму ввода баллов по предмету*/
+	if(document.getElementById("scoretable").rows.length>10)
+	alert("СКОЛЬКО ЕГЭ ТЫ СДАЁШЬ??? ОСТАНОВИСЬ");
+	else{
+      var row = document.getElementById("scoretr"); 
+      var table = document.getElementById("scoretable"); 
+      var clone = row.cloneNode(true);
+	  clone.id="newtr";
+      table.appendChild(clone); 
+	  var remove = clone.insertCell(-1);					/*Кнопка самоудаления - создаётся только для копий оригинального поля*/
+	  remove = document.createElement("BUTTON");
+	  remove.name="removebtn";								/*Для CSS*/
+	  remove.innerHTML="×";
+	  remove.onclick=function(){this.parentNode.remove();};	/*ШОК: под давлением ребёнок убивает собственных родителей, затем себя*/
+	  clone.appendChild(remove);
+	  }
+}
+
+function plus_dir(){				/*Дублирует форму выбора направления*/
+	  if(document.getElementById("dir.table").rows.length>5)
+	  alert("Слишком много направлений. Лучше выберите 'БЕЗ НАПРАВЛЕНИЯ'.");
+	  else{
+      var row = document.getElementById("dir.tr"); 
+      var table = document.getElementById("dir.table"); 
+      var clone = row.cloneNode(true); 
+      table.appendChild(clone); 
+	  var remove = clone.insertCell(-1);					/*Кнопка самоудаления, Ctrl+C Ctrl+V*/
+	  remove = document.createElement("BUTTON");
+	  remove.name="removebtn";								/*Для CSS*/
+	  remove.innerHTML="×";
+	  remove.onclick=function(){this.parentNode.remove();};	/*ШОК: под давлением ребёнок убивает собственных родителей, затем себя*/
+	  clone.appendChild(remove);
+	  }
+}
+
+	function empty() {					/*Требует ввода баллов для поиска*/
+		var x;
+		x = document.getElementById("ege").value;
+		if (x == "null") {
+			alert("Выберите предмет ЕГЭ из выпадающего списка!");
+			return false;
+		};
+		var y;
+		y = document.getElementById("ball").value;
+		if (y == ""||y>100||y<0) {
+			alert("Введите балл от 0 до 100 в поле напротив предмета.");
+			return false;
+		};
+	}
+
+</script>
+
+</head>
+
+<body>
+
+	<style>
+
+		.header { /*ЗАГОЛОВОК*/
+			display: flex;
+			margin: 50 auto;
+			background-color: #e0f4ff;
+		}
+
+		#icon {
+			border: 15px solid red;
+			border-radius: 50px;
+			background-color: white;
+			width: 300;
+			height: 300;
+			text-align: center;
+			font-size: 30;
+			margin: auto;
+		}
+
+		#instruction {
+			margin: auto;
+			text-align: center;
+			width: 500px;
+		}
+
+		#admin {
+			margin: auto;
+			text-align: center;
+			font-style: italic;
+			font-size: 16;
+			width:350;
+		}
+
+		/*конец ЗАГОЛОВКА*/
+
+
+		.main { /*ОСНОВНАЯ ЧАСТЬ*/
+			display: flex;
+			width: 1000px;
+			margin: 100 auto 5 auto;
+		}
+
+		#score {
+			margin: auto;
+			text-align: center;
+		}
+
+		#direction {
+			margin: auto;
+			text-align: center;
+		}
+
+		button[name=plus] {
+			margin: 15;
+			font-size: 100;
+			border: none;
+			padding: 0px 30px;
+			background-color: white;
+			-webkit-text-fill-color: white;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: black;
+			text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		}
+
+		button[name=removebtn] {
+			padding: 1 5 1 5;
+			font-size: 16;
+			margin: 4px auto;
+			-webkit-text-stroke-width: 1px;
+		}
+
+		select {
+			font-size: 20;
+			text-align-last: center;
+		}
+
+		input[name=ball] {
+			width: 70px;
+			text-align: center;
+			font-size: 20;
+		}
+		/*Конец ОСНОВНОЙ ЧАСТИ*/
+
+
+		.search { /*ПОИСК И РЕЗУЛЬТАТЫ*/
+			display: flex;
+			flex-direction: column;
+		}
+
+		#gobutton {
+			margin: auto;
+		}
+
+		input[value="ПОИСК"] {
+			font-size: 40;
+			font-family: impact;
+			border: none background-color:white;
+			padding: 10px 20px;
+			box-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		}
+
+		#results {
+			margin: 50 auto;
+			text-align: center;
+		}
+
+		#restable {
+			font-size: 24;
+			border: 1px solid black;
+		}
+
+		#restable td:nth-child(even) {
+			background-color: #e0f4ff;
+		}
+		
+		#restable td {
+			border: 1px solid #ddd;
+			text-align: center;
+			padding: 15px;
+			font-weight: bold;
+		}
+
+
+		#restable tr {
+			text-align: left;
+			font-weight: normal;
+		}
+				/*Конец ПОИСКА И РЕЗУЛЬТАТОВ*/
+				.ucoz {
+			margin-top: 100;
+			font-size: 1;
+		}
+
+	</style>
+
+	<div class=header>
+		<!--В заголовок входят логотип, инструкция и выбор города-->
+
+		<div id=icon>
+			<h1> Выбор ВУЗа Онлайн </h1>
+		</div>
+
+		<div id=instruction>
+			<p><h2> Чтобы продолжить, выберите желаемое направление и Ваши результаты Единого Государственного Экзамена. </h2></p>
+			<br>
+			<p>
+				<select name=city form="SEARCH">
+					<option value="any" style="font-style:italic;">Все города</option>
+					<option value="msk">Москва</option>
+					<option value="spb">Санкт-Петербург</option>
+					<option value="zel">Зеленоград</option>
+					<option value="sam">Самара</option>
+					<option value="nvs">Новосибирск</option>
+				</select>
+			</p>
+		</div>
+
+		<div id=admin>
+		</div>
+
+	</div>								<!--Конец заголовка (header)-->
+
+	<div class=main>
+		<!--В основную часть входят таблицы ввода-->
+
+		<div id=score>
+			<table id=scoretable>
+				<tr id=scoretr>
+					<!--Поле выбора предмета-->
+					<td>
+						<select id="ege" form="SEARCH" name=ege>
+							<option selected disabled value="null" style="font-style:italic;">Выберите предмет...</option>
+							<option value="mat">Математика</option>
+							<option value="rus">Русский язык</option>
+							<option value="fiz">Физика</option>
+							<option value="inf">Информатика и ИКТ</option>
+							<option value="obs">Обществознание</option>
+							<option value="ang">Английский язык</option>
+							<option value="him">Химия</option>
+							<option value="bio">Биология</option>
+							<option value="geo">География</option>
+							<option value="lit">Литература</option>
+							<option value="ist">История</option>
+						</select>
+					</td>
+					<td><input name=ball id="ball" type=number min=0 max=100 placeholder="Балл" form="SEARCH"></td>			<!--Поле ввода баллов-->
+				</tr>
+			</table>
+			<br>
+			<button name=plus onclick="plus_score()">+</button>
+		</div>
+
+		<div id=direction>
+			<table id=dir.table>
+				<tr id=dir.tr>
+					<td>
+						<select form="SEARCH" name=tag>
+							<option value="/*/" style="font-style:italic;">Без направления</option>
+							<option value="inf">Информационные технологии</option>
+							<option value="eco">Экономика</option>
+							<option value="man">Менеджмент</option>
+							<option value="ing">Инженерия</option>
+							<option value="med">Медицина</option>
+							<option value="voe">Военная кафедра</option>
+						</select>
+					</td>
+				<tr>
+			</table>
+			<br>
+			<button name=plus onclick="plus_dir()">+</button>
+		</div>
+
+	</div>								<!--Конец основной части (main)-->
+
+	<div class=search>
+		<!--В поиск входят кнопка поиска и окно результатов-->
+		<div id=gobutton>
+			<form id="SEARCH" action="/poisk" method="POST">
+				<input type=submit value="ПОИСК" onclick="return empty()">
+			</form>
+		</div>
+		<div id="results">
+			<p id="result"><i>Здесь отобразятся результаты поиска.</i></p>
+
+		</div>
+	</div>								<!--Конец поиска (search)-->
+
+
+
+</html>
